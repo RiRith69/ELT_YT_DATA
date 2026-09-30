@@ -1,0 +1,33 @@
+[2026-09-27T16:32:59.543+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-09-27T16:32:59.568+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_quality_check.soda_test_staging manual__2026-09-27T16:32:58.245280+00:00 [queued]>
+[2026-09-27T16:32:59.577+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_quality_check.soda_test_staging manual__2026-09-27T16:32:58.245280+00:00 [queued]>
+[2026-09-27T16:32:59.580+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-09-27T16:32:59.594+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): soda_test_staging> on 2026-09-27 16:32:58.245280+00:00
+[2026-09-27T16:32:59.600+0000] {standard_task_runner.py:63} INFO - Started process 1320 to run task
+[2026-09-27T16:32:59.603+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'data_quality_check', 'soda_test_staging', 'manual__2026-09-27T16:32:58.245280+00:00', '--job-id', '50', '--raw', '--subdir', 'DAGS_FOLDER/main.py', '--cfg-path', '/tmp/tmptu44jtzb']
+[2026-09-27T16:32:59.607+0000] {standard_task_runner.py:91} INFO - Job 50: Subtask soda_test_staging
+[2026-09-27T16:32:59.662+0000] {task_command.py:426} INFO - Running <TaskInstance: data_quality_check.soda_test_staging manual__2026-09-27T16:32:58.245280+00:00 [running]> on host 563082dff9ba
+[2026-09-27T16:32:59.769+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='data@engineer.com' AIRFLOW_CTX_DAG_OWNER='data engineer' AIRFLOW_CTX_DAG_ID='data_quality_check' AIRFLOW_CTX_TASK_ID='soda_test_staging' AIRFLOW_CTX_EXECUTION_DATE='2026-09-27T16:32:58.245280+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-27T16:32:58.245280+00:00'
+[2026-09-27T16:32:59.773+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-09-27T16:32:59.776+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-09-27T16:32:59.780+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'Soda scan -d pg_datasource -c opt/airflow/include/soda/configuration.yml -V SCHEMA=staging opt/airflow/include/soda/check.yml']
+[2026-09-27T16:32:59.797+0000] {subprocess.py:86} INFO - Output:
+[2026-09-27T16:32:59.800+0000] {subprocess.py:93} INFO - /usr/bin/bash: line 1: Soda: command not found
+[2026-09-27T16:32:59.801+0000] {subprocess.py:97} INFO - Command exited with return code 127
+[2026-09-27T16:32:59.803+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-09-27T16:32:59.814+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 127.
+[2026-09-27T16:32:59.820+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=data_quality_check, task_id=soda_test_staging, run_id=manual__2026-09-27T16:32:58.245280+00:00, execution_date=20260927T163258, start_date=20260927T163259, end_date=20260927T163259
+[2026-09-27T16:32:59.833+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 50 for task soda_test_staging (Bash command failed. The command returned a non-zero exit code 127.; 1320)
+[2026-09-27T16:32:59.860+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-09-27T16:32:59.888+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-27T16:32:59.894+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

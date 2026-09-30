@@ -69,11 +69,9 @@ jobs:
       DOCKERHUB_NAMESPACE: ${{ vars.DOCKERHUB_NAMESPACE }}
       DOCKERHUB_REPOSITORY: ${{ vars.DOCKERHUB_REPOSITORY }}
       DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
-
-      steps:
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Get changed files
         id: changed-files-tests
         uses: tj-actions/changed-files@v46

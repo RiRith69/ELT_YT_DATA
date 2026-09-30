@@ -76,25 +76,30 @@ jobs:
 
       - name: Get changed files
         id: changed-files-tests
-        uses: tj-actions/changed-files@v46   # better: pin to a commit SHA
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             dags/**
             include/**
+            tests/**
             docker-compose.yml
-      - name: Set up Docker compose
+
+      - name: Set up Docker Compose
         if: steps.changed-files-tests.outputs.any_changed == 'true'
-        run: docker compose up -d
+        run: docker compose up -d --wait
+
       - name: Run Unit and Integration Tests
         if: steps.changed-files-tests.outputs.any_changed == 'true'
-        run: docker exec -t airflow-worker sh -c "pytest tests/ -v"
+        run: docker compose exec -T airflow-worker sh -c "pytest tests/ -v"
+
       - name: Run End-to-End DAG Tests
         if: steps.changed-files-tests.outputs.any_changed == 'true'
         run: |
           DAG_NAMES=("produce_json" "update_db" "data_quality_check")
           for DAG in "${DAG_NAMES[@]}"; do
-            docker exec -t airflow-worker sh -c "airflow dags test $DAG"
+            docker compose exec -T airflow-worker sh -c "airflow dags test $DAG"
           done
+
       - name: Tear down Docker Compose
-        if: steps.changed-files-tests.outputs.any_changed == 'true'
+        if: always() && steps.changed-files-tests.outputs.any_changed == 'true'
         run: docker compose down

@@ -10,18 +10,18 @@ maxResults = 50
 
 @task
 def get_playlist_id():
-    API_KEY = Variable.get("API_KEY")
-    CHANNEL = Variable.get('CHANNEL')          # ✅ use the key name you set in Airflow UI
+    API_KEY = Variable.get('API_KEY')
+    CHANNEL_HANDLE = Variable.get('CHANNEL_HANDLE')          # ✅ use the key name you set in Airflow UI
     url = (
-        "https://youtube.googleapis.com/youtube/v3/channels"
-        f"?part=contentDetails&forHandle=@{CHANNEL}&key={API_KEY}"
+        "https://youtube.googleapis.com/youtube/v3/CHANNEL_HANDLEs"
+        f"?part=contentDetails&forHandle=@{CHANNEL_HANDLE}&key={API_KEY}"
     )
     response = requests.get(url)
     response.raise_for_status()
     data = response.json()
 
     if "items" not in data or not data["items"]:
-        raise ValueError(f"No channel found for handle @{CHANNEL}: {data}")
+        raise ValueError(f"No CHANNEL_HANDLE found for handle @{CHANNEL_HANDLE}: {data}")
 
     return data["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
 

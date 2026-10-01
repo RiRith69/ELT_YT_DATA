@@ -22,8 +22,8 @@ jobs:
         uses: tj-actions/changed-files@v46   # better: pin to a commit SHA
         with:
           files: |
-            Dockerfile
-            requirements.txt
+            dockerfile
+            requirement.txt
 
       - name: Set up Docker Buildx
         if: steps.changed-files-build.outputs.any_changed == 'true'
@@ -39,7 +39,7 @@ jobs:
       - name: Build and push Docker image
         if: steps.changed-files-build.outputs.any_changed == 'true'
         run: |
-          docker buildx build --push \
+          docker buildx build --push -f dockerfile \
             --tag ${{ vars.DOCKERHUB_NAMESPACE }}/${{ vars.DOCKERHUB_REPOSITORY }}:latest \
             --tag ${{ vars.DOCKERHUB_NAMESPACE }}/${{ vars.DOCKERHUB_REPOSITORY }}:${{ github.sha }} \
             .

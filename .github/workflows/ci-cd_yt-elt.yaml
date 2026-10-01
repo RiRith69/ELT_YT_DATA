@@ -81,6 +81,7 @@ jobs:
             include/**
             tests/**
             docker-compose.yml
+            .github/workflows/**
 
       - name: Set up Docker Compose
         if: steps.changed-files-tests.outputs.any_changed == 'true'
